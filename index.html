@@ -1,0 +1,61 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>imageloader</title>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.imageloader.js"></script>
+
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+<body>
+
+<div class="headline">imageloader.js
+    <span class="preloader"></span>
+</div>
+
+<div class="subheadline">a jquery plugin for preloading images</div>
+
+<div id="complete-icon" class="icon">Done!</div>
+
+<ul id="images">
+
+</ul>
+
+<script>
+    var $line = $('.headline .preloader'),
+            $images = $('#images');
+
+    $(document).ready(function () {
+
+        $.imageloader({
+            //要预载的图片数组
+            urls: [
+                'images/0.jpg', 'images/1.jpg', 'images/2.jpg', 'images/3.jpg', 'images/4.jpg', 'images/5.jpg', 'images/6.jpg', 'images/7.jpg', 'images/8.jpg', 'images/9.jpg', 'images/10.jpg', 'images/11.jpg', 'images/12.jpg', 'images/13.jpg', 'images/14.jpg',
+                'images/15.jpg', 'images/16.jpg', 'images/17.jpg', 'images/18.jpg', 'images/19.jpg', 'images/20.jpg', 'images/21.jpg', 'images/22.jpg', 'images/23.jpg', 'images/24.jpg', 'images/25.jpg', 'images/26.jpg', 'images/27.jpg'
+            ],
+            //完成预载执行函数
+            onComplete: function () {
+                $('#complete-icon').animate({opacity: 1}, 600);
+            },
+            //监听预载中要执行的函数
+            onUpdate: function (ratio, image) {
+                $line.css('width', (ratio * 100) + '%');
+                if (image) {
+                    var index = $('#images li').size();
+                    $images.append('<li id="' + index + '"><img src="' + image + '"/></li>');
+                    $('#images li:eq(' + index + ')').delay(index * 50).animate({opacity: 1}, 1000);
+                }
+            },
+            //错误的处理
+            onError: function (err) {
+                console.log(err);
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>
